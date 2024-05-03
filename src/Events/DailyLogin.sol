@@ -20,10 +20,10 @@ contract DailyLoginsV1 is Ownable{
     mapping (address => User) internal user;
     mapping (address => address) internal referer;
 
-    constructor(address _core)
+    constructor()
     Ownable(msg.sender)
     {
-        core = EventCore(_core);
+        core =new EventCore();
     }
 
     function dailyLogin() public payable{
