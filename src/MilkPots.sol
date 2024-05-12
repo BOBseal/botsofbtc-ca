@@ -8,11 +8,11 @@ import "./Events/PointsCore.sol";
 contract MilkPotsV1 is Ownable{
 
     uint public currentRound = 1;
-    uint public maxTicketsPerRound = 500;
+    uint public maxTicketsPerRound = 100;
     uint public maxWinners = 10;
     uint public houseFee = 15; //15 % of pool 
     uint internal ticketNonce = 1;
-    uint internal maxTicketsPerUser = 3; // 4% chance , max tickets per user, per round
+    uint internal maxTicketsPerUser = 10; // 4% chance , max tickets per user, per round
     uint internal luckyWinnerBonus;
     uint public ticketPrice; // btc
     uint public accumulatedFee;
@@ -129,9 +129,11 @@ contract MilkPotsV1 is Ownable{
                 userUnclaimedRewards[to][r] += winAmount;
                 rounds[r].poolBalances -= winAmount;
                 // reward bonus allocation for user to claim later
-                if(NftContract.balanceOf(msg.sender)>0){
-                    roundMaps[r].winBonus[msg.sender] += luckyWinnerBonus + (10 * uint(NftContract.balanceOf(msg.sender))); // additional 10 points per nft hold when buying ticket
-                }
+                NftContract.balanceOf(msg.sender)>0 ?
+                // if winner ticket owner has >0 NFTs , bonus reward is multiplied per amount held   
+                roundMaps[r].winBonus[msg.sender] += luckyWinnerBonus * uint(NftContract.balanceOf(msg.sender))
+                // if not just base bonus is won
+                :roundMaps[r].winBonus[msg.sender] += luckyWinnerBonus;
             }
         }
     }
