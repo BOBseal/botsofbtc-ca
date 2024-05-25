@@ -29,7 +29,7 @@ contract SKIBBIDIESOFBITCOIN is ERC721, ERC721URIStorage, Ownable, ERC2981{
         ERC721("Skibbidies Of Bitcoin", "SOB")
         Ownable(msg.sender)
     {   
-        //Royalty of 6.9%
+        
         _setDefaultRoyalty(msg.sender, 1000);
         Managers[msg.sender]= true;
         Managers[manager]= true;
