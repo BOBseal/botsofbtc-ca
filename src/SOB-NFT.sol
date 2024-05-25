@@ -17,10 +17,11 @@ contract SKIBBIDIESOFBITCOIN is ERC721, ERC721URIStorage, Ownable, ERC2981{
 
     EventCore internal RPCore;
 
-    string internal baseUri;
     uint internal RPPerMint = 1000;
     uint public totalSupply = 3456;
     uint internal nextIdToMint = 1;
+    string internal baseUri;
+    
     event Burn(uint indexed  id , address indexed from);
 
     mapping (address => bool) internal Managers;
